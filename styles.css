@@ -21,15 +21,14 @@
     font-size: 14px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     
-    /* Bulletproof centering & positioning */
+    /* Aggressive centering */
     position: fixed;
-    top: 20px; /* Distance from top */
-    left: 20px;
-    right: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-    max-width: 400px;
+    top: 10px; /* Distance from top */
+    left: 0;
+    right: 0;
+    margin: 0 auto; /* Center horizontally */
+    width: 90%; /* Responsive width */
+    max-width: 350px; /* Don't get too wide */
     z-index: 2147483647; /* Maximum z-index */
     
     animation: slideDown 0.5s ease-out forwards;
