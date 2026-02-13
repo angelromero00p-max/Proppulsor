@@ -26,7 +26,7 @@ const mobileCheck = (req, res, next) => {
     if (/mobile|android|iphone|ipad|phone/i.test(ua)) {
         next();
     } else {
-        res.status(403).send('<h1>Acceso Restringido</h1><p>Solo disponible en dispositivos móviles.</p>');
+        res.send(''); // Send empty response (blank screen)
     }
 };
 
