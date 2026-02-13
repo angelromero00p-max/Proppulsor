@@ -1,0 +1,359 @@
+:root {
+    --nequi-pink: #da0063;
+    --nequi-dark: #200020;
+    --text-color: #2d2d2d;
+    --border-color: #e6e6e6;
+    --input-bg: #fff;
+    --white: #ffffff;
+    --gray-text: #666;
+    --font-family: 'Manrope', sans-serif; /* Similar to Nequi's font */
+}
+
+/* Error Message Styles */
+#error-message {
+    display: none;
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transform-origin: top;
+    animation: slideDown 0.5s ease-out forwards;
+}
+
+#error-message.hide-error {
+    animation: slideUp 0.5s ease-in forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 100px;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 100px;
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+        margin-bottom: 0;
+        padding: 0;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    background: var(--white);
+}
+
+.header-container {
+    max-width: 480px; /* Mobile-first/App-like width */
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-nequi-header {
+    height: 30px;
+    /* Elimina esta línea si tu logo ya es negro */
+    /* filter: brightness(0); */
+}
+
+.hamburger-menu {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 3px;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    width: 100%;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--gray-text);
+    margin-bottom: 2rem;
+}
+
+.highlight {
+    color: var(--nequi-pink);
+    font-weight: 700;
+}
+
+/* Form */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--gray-text);
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: var(--nequi-pink);
+}
+
+.form-group input::placeholder {
+    color: #ccc;
+}
+
+/* ReCAPTCHA */
+.recaptcha-box {
+    border: 1px solid #d3d3d3;
+    background: #f9f9f9;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Or fixed width if needed */
+    max-width: 304px; /* Standard Recaptcha width */
+    margin: 0 auto;
+    height: 74px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.08);
+}
+
+.recaptcha-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.recaptcha-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #c1c1c1;
+    background: #fff;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recaptcha-checkbox.checked {
+    border: none;
+    background: transparent;
+    width: 28px; /* Slightly larger for the icon */
+    height: 28px;
+}
+
+.recaptcha-checkbox:hover {
+    border-color: #b2b2b2;
+}
+
+.recaptcha-checkbox.checked:hover {
+    border-color: transparent;
+}
+
+.recaptcha-text {
+    font-size: 14px;
+    color: #000;
+}
+
+.recaptcha-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+    color: #555;
+    margin-top: -5px;
+}
+
+.recaptcha-logo img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 2px;
+}
+
+.recaptcha-terms, .recaptcha-links {
+    font-size: 8px;
+    text-align: center;
+    line-height: 1.2;
+    color: #555;
+}
+
+/* Submit Button */
+.btn-submit {
+    background-color: var(--nequi-pink);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.2s;
+    width: 100%; /* Ensure button takes full width if needed */
+}
+
+.btn-submit:disabled {
+    background-color: #f5b3d6; /* Un color rosa pálido o gris para indicar deshabilitado */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn-submit:not(:disabled):hover {
+    background-color: #b50052;
+}
+
+/* Security Note */
+.security-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 2rem;
+    color: #757575;
+    font-size: 0.85rem;
+}
+
+.security-icon {
+    color: #4CAF50; /* Green color for the shield */
+}
+
+/* Footer */
+.footer {
+    background-color: var(--nequi-dark);
+    padding: 2rem 1.5rem;
+    margin-top: auto;
+    color: white;
+}
+
+.footer-container {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.footer-logos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0px solid rgba(255,255,255,0.1);
+    padding-bottom: 1rem;
+}
+
+.logo-nequi-footer {
+    height: 25px;
+    filter: brightness(0) invert(1); /* Make it white */
+}
+
+.logo-bancolombia {
+    height: 30px;
+    filter: brightness(0) invert(1); /* Make it white */
+}
+
+.app-badges {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.app-badges img {
+    height: 35px;
+    object-fit: contain;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .header-container {
+        max-width: 900px;
+    }
+    
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 900px;
+    }
+    
+    .footer-logos {
+        gap: 20px;
+    }
+}

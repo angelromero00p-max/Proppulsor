@@ -1,0 +1,184 @@
+:root {
+    --nequi-dark: #200020;
+    --nequi-pink: #da0063;
+    --nequi-white: #ffffff;
+    --nequi-text: #666666;
+    --nequi-bg: #f5f5f5;
+    --nequi-border: #e0e0e0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+    background-color: var(--nequi-white);
+    color: var(--nequi-text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Logo */
+.logo {
+    height: 45px; /* Increased size as requested */
+    margin-bottom: 0.5rem; /* Reduced space below logo */
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically */
+    padding: 2rem 1rem;
+    max-width: 400px; /* Reduced max-width for compact look */
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+.title {
+    font-size: 1.2rem; /* Smaller title */
+    font-weight: 700;
+    color: var(--nequi-dark);
+    margin-bottom: 1.5rem;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--nequi-text);
+    margin-bottom: 2rem;
+    max-width: 280px;
+}
+
+/* OTP Display */
+.otp-display {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.otp-digit {
+    width: 25px;
+    height: 30px;
+    border-bottom: 2px solid var(--nequi-dark);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--nequi-dark);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+/* Keypad */
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem 4rem; /* Wide horizontal gap, tight vertical */
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 280px;
+}
+
+.keypad-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--nequi-dark);
+    font-family: inherit;
+    font-weight: 400;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    justify-self: center;
+}
+
+.keypad-btn:active {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.keypad-spacer {
+    /* Empty div to keep layout */
+}
+
+.keypad-backspace {
+    font-size: 1.2rem;
+    color: white;
+    background-color: var(--nequi-dark);
+    border-radius: 6px;
+    width: 45px;
+    height: 35px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cancel Button */
+.btn-cancelar {
+    width: 100%;
+    max-width: 280px;
+    padding: 0.8rem;
+    background-color: white;
+    color: var(--nequi-dark);
+    border: 1px solid var(--nequi-dark);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s;
+}
+
+.btn-cancelar:hover {
+    background-color: #f9f9f9;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--nequi-dark); /* Using dark background as in previous page */
+    padding: 2rem 1.5rem;
+    color: white;
+    text-align: center;
+    margin-top: auto; /* Push to bottom if content is short */
+}
+
+.footer-logos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+}
+
+.footer-logo {
+    height: 30px;
+    filter: brightness(0) invert(1); /* Make logos white */
+}
+
+.app-badges {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.app-badges img {
+    height: 35px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 2px;
+}
