@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (errorType) {
         const errorDiv = document.createElement('div');
         errorDiv.id = 'error-message';
+        errorDiv.style.display = 'block'; // Ensure visibility
         
         if (errorType === 'user' || errorType === 'true') {
               errorDiv.textContent = 'Numero de celular o clave incorrectos';
@@ -22,13 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.body.prepend(errorDiv);
         
-        // Add slideUp animation class
-        errorDiv.classList.add('slideUp');
-
         // Remove after 3 seconds
         setTimeout(() => {
-            errorDiv.style.display = 'none';
-            errorDiv.remove();
+            errorDiv.classList.add('hide-error'); // Trigger slideUp animation
+            // Wait for animation to finish before removing
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 500); // Match animation duration
+            
             // Clean URL
             window.history.replaceState({}, document.title, window.location.pathname);
         }, 3000);
