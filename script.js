@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error(error);
             }
 
-            navigateWithLoader("credito.html");
+            navigateWithLoader("/Xy7K9LmN2PqR5StV8WzX1Y4AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCdEfGhIjKlMn");
         });
     }
 });

