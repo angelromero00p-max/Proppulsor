@@ -16,7 +16,7 @@
 /* Error Message Styles */
 #error-message {
     display: none;
-    background-color: #da0063; /* Nequi pink */
+    background-color: #ff0000; /* Red */
     color: #ffffff;
     padding: 15px;
     border-radius: 8px;
